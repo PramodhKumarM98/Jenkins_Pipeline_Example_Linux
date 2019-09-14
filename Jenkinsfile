@@ -20,7 +20,7 @@ node{
     }
 	stage('Test Code Compile'){
             withMaven(maven:'MyMaven'){
-                bat 'test-compile'   
+                bat 'mvn test-compile'   
             }
     }
     stage('Code Testing'){
