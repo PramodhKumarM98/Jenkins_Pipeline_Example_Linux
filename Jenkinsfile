@@ -2,7 +2,7 @@
 import java.net.URL
 node{
     stage('git checkout'){
-        git 'https://github.com/PramodhKumarM98/Jenkins_Pipeline_Example_Linux.git'
+        git credentialsId: '2352b5e9-8a59-4aee-8306-0ab9c3a85e8b', url: 'https://github.com/PramodhKumarM98/Jenkins_Pipeline_Example_Linux.git'
     }
     stage('Compile'){
         withMaven(maven:'MyMaven'){
