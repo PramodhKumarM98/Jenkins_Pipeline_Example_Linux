@@ -2,17 +2,17 @@
 import java.net.URL
 node{
     stage('git checkout'){
-        git 'https://github.com/PramodhKumarM98/Jenkins_Pipeline_Example.git'
+        git 'https://github.com/PramodhKumarM98/Jenkins_Pipeline_Example_Linux.git'
     }
     stage('Compile'){
         withMaven(maven:'MyMaven'){
-            bat 'mvn compile'
+            sh 'mvn compile'
         }
     }
     stage('Code Review'){
         try {
             withMaven(maven:'MyMaven'){
-                bat 'mvn pmd:pmd'   
+                sh 'mvn pmd:pmd'   
             }
         } finally {
             pmd canComputeNew: false, defaultEncoding: '', healthy: '', pattern: 'target/pmd.xml', unHealthy: ''
@@ -20,13 +20,13 @@ node{
     }
 	stage('Test Code Compile'){
             withMaven(maven:'MyMaven'){
-                bat 'mvn test-compile'   
+                sh 'mvn test-compile'   
             }
     }
     stage('Code Testing'){
         try {
             withMaven(maven:'MyMaven'){
-                bat 'mvn test'   
+                sh 'mvn test'   
             }
         } finally {
             junit 'target/surefire-reports/*xml'
@@ -35,7 +35,7 @@ node{
      stage('Coverage Checks'){
         try {
             withMaven(maven:'MyMaven'){
-                bat 'mvn cobertura:cobertura -Dcobertura.report.format=xml'   
+                sh 'mvn cobertura:cobertura -Dcobertura.report.format=xml'   
             }
         } finally {
             cobertura autoUpdateHealth: false, autoUpdateStability: false, coberturaReportFile: 'target/site/cobertura/coverage.xml', conditionalCoverageTargets: '70, 0, 0', failUnhealthy: false, failUnstable: false, lineCoverageTargets: '80, 0, 0', maxNumberOfBuilds: 0, methodCoverageTargets: '80, 0, 0', onlyStable: false, sourceEncoding: 'ASCII', zoomCoverageChart: false
@@ -43,7 +43,7 @@ node{
     }
     stage('Package'){
         withMaven(maven:'MyMaven'){
-            bat 'mvn package'
+            sh 'mvn package'
         }
     }
 }
